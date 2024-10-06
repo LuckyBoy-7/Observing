@@ -15,7 +15,7 @@ public class Magnifier : Interactable
     private void Awake()
     {
         // todo: 到时候开了
-        // Cursor.visible = false;
+        Cursor.visible = false;
     }
 
     protected override void ManagedUpdate()
