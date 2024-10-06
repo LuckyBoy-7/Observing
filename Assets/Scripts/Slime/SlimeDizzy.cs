@@ -19,6 +19,11 @@ namespace Slime
             dizzyTimer = DizzyTime;
             rb.velocity = Vector2.zero;
         }
+        
+        private void DizzyEnd()
+        {
+            intentionAnim.Play("Empty");
+        }
 
         private int DizzyUpdate()
         {

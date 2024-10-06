@@ -19,6 +19,11 @@ namespace Slime
             sleepTimer = SleepTime;
             rb.velocity = Vector2.zero;
         }
+        
+        private void SleepEnd()
+        {
+            intentionAnim.Play("Empty");
+        }
 
         private int SleepUpdate()
         {

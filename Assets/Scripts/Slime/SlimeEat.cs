@@ -24,6 +24,12 @@ namespace Slime
             intentionAnim.Play("Bread");
         }
 
+        private void EatEnd()
+        {
+            anim.speed = 2f;
+            intentionAnim.Play("Empty");
+        }
+
         private int EatUpdate()
         {   
             if (CurrentEnergy > FullThreshold)

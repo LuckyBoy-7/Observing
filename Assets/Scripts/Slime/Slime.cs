@@ -45,11 +45,11 @@ namespace Slime
             StateMachine = new StateMachine();
             StateMachine.SetCallbacks(StRun, RunUpdate, null, RunBegin, RunEnd);
             StateMachine.SetCallbacks(StLove, LoveUpdate, null, LoveBegin, LoveEnd);
-            StateMachine.SetCallbacks(StEat, EatUpdate, null, EatBegin, null);
-            StateMachine.SetCallbacks(StSleep, SleepUpdate, null, SleepBegin, null);
-            StateMachine.SetCallbacks(StDeath, DeathUpdate, null, DeathBegin, null);
+            StateMachine.SetCallbacks(StEat, EatUpdate, null, EatBegin, EatEnd);
+            StateMachine.SetCallbacks(StSleep, SleepUpdate, null, SleepBegin, SleepEnd);
+            StateMachine.SetCallbacks(StDeath, DeathUpdate, null, DeathBegin, DeathEnd);
             StateMachine.SetCallbacks(StPickedup, PickedupUpdate, null, PickedupBegin, PickedupEnd);
-            StateMachine.SetCallbacks(StDizzy, DizzyUpdate, null, DizzyBegin, null);
+            StateMachine.SetCallbacks(StDizzy, DizzyUpdate, null, DizzyBegin, DizzyEnd);
             Add(StateMachine);
 
             CurrentEnergy = MaxEnergy;
@@ -63,7 +63,7 @@ namespace Slime
                 return;
             }
 
-            if (StateMachine.State != StPickedup)
+            if (StateMachine.State != StPickedup && StateMachine.State != StSleep)
                 CurrentEnergy -= EnergyDropSeed * Timer.FixedDeltaTime();
             if (CurrentEnergy < 0)
                 StateMachine.State = StDeath;
@@ -119,6 +119,7 @@ namespace Slime
             StateMachine.State = StRun;
             sr.color = sr.color.WithA(1);
             intentionSr.color = intentionSr.color.WithA(1);
+            intentionSr.sprite = null;
         }
 
         public void OnRelease()

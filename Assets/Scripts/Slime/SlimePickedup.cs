@@ -14,15 +14,15 @@ namespace Slime
         {
             anim.Play("Shock");
             anim.speed = 1f;
-            intentionSr.enabled = false;
             // intentionAnim.Play("Empty");
             rb.velocity = Vector2.zero;
             collider.enabled = false;
+            intentionAnim.Play("Empty");
+            intentionSr.sprite = null;
         }
 
         private void PickedupEnd()
         {
-            intentionSr.enabled = true;
             collider.enabled = true;
         }
 

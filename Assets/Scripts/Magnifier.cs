@@ -42,7 +42,7 @@ public class Magnifier : Interactable
         if (delta != Vector2.zero && !startDrag)
         {
             startDrag = true; // 这种drag是要有偏移才开始drag的
-            
+
             foreach (var slime in SlimeSpawner.Instance.Slimes)
             {
                 if (slime.StateMachine.State == Slime.Slime.StDizzy)
@@ -70,8 +70,13 @@ public class Magnifier : Interactable
             if (slime.StateMachine.State == Slime.Slime.StDizzy)
                 continue;
             slime.StateMachine.State = Slime.Slime.StRun;
-            if (RandomUtils.NextFloat() < 0.1f)
+            if (RandomUtils.NextFloat() < 0.04f)
+            {
                 slime.intentionAnim.Play("Shy");
+                print(123);
+            }
+            else
+                slime.intentionSr.sprite = null;
         }
 
         slimes.Clear();

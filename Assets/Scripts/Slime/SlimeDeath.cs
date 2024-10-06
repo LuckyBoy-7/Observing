@@ -21,6 +21,12 @@ namespace Slime
             collider.enabled = false;
         }
 
+        private void DeathEnd()
+        {
+            intentionAnim.Play("Empty");
+            intentionSr.sprite = null;
+        }
+
         private int DeathUpdate()
         {
             // 因为有时候被撞就滑出去了, 所以要一直赋值

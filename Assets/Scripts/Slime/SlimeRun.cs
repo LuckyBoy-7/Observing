@@ -17,7 +17,7 @@ namespace Slime
         private void RunBegin()
         {
             anim.Play("Run");
-            intentionSr.enabled = false;
+            // intentionSr.enabled = false;
             // intentionAnim.Play("Empty");  // empty好像没用, 因为它并不会更改图片
             anim.speed = 1f;
             tryFindLoverDelayTimer = 2f;
@@ -26,7 +26,7 @@ namespace Slime
         private void RunEnd()
         {
             anim.Play("Run");
-            intentionSr.enabled = true;
+            // intentionSr.enabled = true;
         }
 
         private int RunUpdate()
