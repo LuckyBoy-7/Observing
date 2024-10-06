@@ -32,8 +32,8 @@ namespace DefaultNamespace
         private const float Period5 = 660; // 18:00 黄昏, 色调偏暖, 光线偏暗 
         private const float Period6 = 900; // 22:00, 色调偏冷, 光线偏暗
 
-        // private const float EndTime = 850;
-        private const float EndTime = 100;
+        private const float EndTime = 850;
+        // private const float EndTime = 100;
 
         private const float StartTime = 10;
 
