@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Lucky.Collections;
-using Lucky.Extensions;
-using Lucky.Managers;
-using Lucky.Utilities;
+using Lucky.Framework.Collections;
+using Lucky.Framework.Extensions;
+using Lucky.Framework.Managers;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 
 namespace Lucky.Framework.Particle
@@ -13,7 +13,13 @@ namespace Lucky.Framework.Particle
     /// </summary>
     public class ParticleSystem : Singleton<ParticleSystem>
     {
+        public static Sprite ParticleSprite;
         private DefaultDict<Type, List<Particle>> particles = new(() => new());
+
+        public static void Initialize()
+        {
+            ParticleSprite = Resources.Load<Sprite>("Art/Primatives/Pixels/Particle");
+        }
 
         public void ReleaseParticle<T>(T particle) where T : Particle
         {
@@ -25,7 +31,7 @@ namespace Lucky.Framework.Particle
         {
             if (particles[typeof(T)].Count == 0)
             {
-                T particle = Instantiate(Resources.Load<T>($"Particles/{typeof(T).Name}"));
+                T particle = Instantiate(Resources.Load<T>($"Prefabs/Particles/{typeof(T).Name}"));
                 particles[typeof(T)].Add(particle);
             }
         }

@@ -1,4 +1,4 @@
-using Lucky.Utilities;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 
 namespace Lucky.Framework.Particle

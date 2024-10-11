@@ -1,28 +1,29 @@
 using System;
 using Lucky.Framework;
-using Lucky.Utilities;
+using Lucky.Framework.Utilities;
 using UnityEngine;
+using Animator = Lucky.Framework.Animation.Animator;
 
 namespace DefaultNamespace
 {
     public class Butterfly : ManagedBehaviour
     {
-        public Animator anim;
+        private Animator anim;
         private BezierCurve curve;
         private float k = 0;
         public float Speed = 1;
-        public SpriteRenderer sr;
 
         private void Awake()
         {
-            anim.speed = 0.1f;
+            anim = Animator.CreateById("butterfly");
+            Add(anim);
             curve = new()
             {
                 Begin = RandomUtils.RandomPointInRect(CameraUtils.Bounds),
                 End = RandomUtils.RandomPointInRect(CameraUtils.Bounds),
                 Control = RandomUtils.RandomPointInRect(CameraUtils.Bounds)
             };
-            sr.color = ColorUtils.GetRandomLerpColor(2);
+            anim.Color = ColorUtils.GetRandomLerpColor(2);
         }
 
         protected override void ManagedFixedUpdate()
@@ -44,11 +45,11 @@ namespace DefaultNamespace
             transform.eulerAngles = new Vector3(0, 0, angle);
             if (angle is > -90 and < 90)
             {
-                sr.flipY = false;
+                anim.FlipY = false;
             }
             else
             {
-                sr.flipY = true;
+                anim.FlipY = true;
             }
         }
 

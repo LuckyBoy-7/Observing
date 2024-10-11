@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Lucky.Extensions;
+using Lucky.Framework.Extensions;
 using Lucky.Framework;
-using Lucky.Managers.ObjectPool_;
-using Lucky.Utilities;
+using Lucky.Framework.Managers.ObjectPool_;
+using Lucky.Framework.Utilities;
 using UnityEngine;
+using Animator = Lucky.Framework.Animation.Animator;
 
 namespace Slime
 {
@@ -23,24 +24,28 @@ namespace Slime
         public int DebugState = 0;
 
         private Rigidbody2D rb;
-        public SpriteRenderer sr;
-        public SpriteRenderer intentionSr;
-        public Animator anim;
-        public Animator intentionAnim;
+        private Animator anim;
+        [HideInInspector] public Animator intentionAnim;
         public Collider2D collider;
 
         public float KillRadius;
 
         public Color Color
         {
-            get => sr.color;
-            set => sr.color = value;
+            get => anim.Color;
+            set => anim.Color = value;
         }
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
-            intentionAnim.speed = 0.1f;
+
+            anim = Animator.CreateById("slime");
+            Add(anim);
+
+            intentionAnim = Animator.CreateById("intention");
+            Add(intentionAnim);
+            intentionAnim.transform.localPosition = Vector3.up * 1.5f;
 
             StateMachine = new StateMachine();
             StateMachine.SetCallbacks(StRun, RunUpdate, null, RunBegin, RunEnd);
@@ -82,7 +87,7 @@ namespace Slime
         public override void Render()
         {
             base.Render();
-            sr.transform.SetScaleX(MathUtils.Sign2(rb.velocity.x));
+            anim.transform.SetScaleX(MathUtils.Sign2(rb.velocity.x));
         }
 
 
@@ -117,9 +122,9 @@ namespace Slime
             collider.enabled = true;
             CurrentEnergy = MaxEnergy;
             StateMachine.State = StRun;
-            sr.color = sr.color.WithA(1);
-            intentionSr.color = intentionSr.color.WithA(1);
-            intentionSr.sprite = null;
+            Color = Color.WithA(1);
+            intentionAnim.Color = intentionAnim.Color.WithA(1);
+            intentionAnim.PlayEmpty();
         }
 
         public void OnRelease()

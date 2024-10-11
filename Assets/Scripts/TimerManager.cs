@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Lucky.Extensions;
-using Lucky.Managers;
-using Lucky.Utilities;
+using Lucky.Framework.Extensions;
+using Lucky.Framework.Managers;
+using Lucky.Framework.Utilities;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -160,10 +160,9 @@ namespace DefaultNamespace
         }
 
 
-
-        protected override void ManagedUpdate()
+        protected override void ManagedFixedUpdate()
         {
-            base.ManagedUpdate();
+            base.ManagedFixedUpdate();
 
             // time
             curTime += Timer.DeltaTime() * TimeMultiplier;
@@ -180,8 +179,9 @@ namespace DefaultNamespace
 
             if (isStartEnd)
                 return;
-            float alpha = 1 - MathUtils.Min(1, curTime / StartTime);
-            panel.color = panel.color.WithA(alpha);
+            // 一开始淡入
+            // float alpha = 1 - MathUtils.Min(1, curTime / StartTime);
+            // panel.color = panel.color.WithA(alpha);
 
             // 模拟微微眨眼的效果
             Vignette vignette = volume.profile.GetSetting<Vignette>();

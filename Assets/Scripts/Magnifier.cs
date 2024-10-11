@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Lucky.Framework;
-using Lucky.Interactive;
-using Lucky.Utilities;
+using Lucky.Framework.Interactive;
+using Lucky.Framework.Utilities;
 using Slime;
 using UnityEngine;
 
@@ -18,9 +18,9 @@ public class Magnifier : Interactable
         Cursor.visible = false;
     }
 
-    protected override void ManagedUpdate()
+    protected override void ManagedFixedUpdate()
     {
-        base.ManagedUpdate();
+        base.ManagedFixedUpdate();
         transform.position = GameCursor.MouseWorldPos;
 
         float angle = 45; // 一开始先转正
@@ -76,7 +76,7 @@ public class Magnifier : Interactable
                 print(123);
             }
             else
-                slime.intentionSr.sprite = null;
+                slime.intentionAnim.PlayEmpty();
         }
 
         slimes.Clear();

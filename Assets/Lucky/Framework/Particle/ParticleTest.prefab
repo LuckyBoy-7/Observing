@@ -48,7 +48,7 @@ MonoBehaviour:
     LifeMin: 0
     LifeMax: 0
     Realtime: 0
-    Source: {fileID: 7482667652216324306, guid: 9dca019e419dd7a47beabd34ec73b40a, type: 3}
+    Source: {fileID: 0}
     Color: {r: 1, g: 1, b: 1, a: 1}
     Color2: {r: 1, g: 1, b: 1, a: 1}
     ColorMode: 0

@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Lucky.Extensions;
+using Lucky.Framework.Extensions;
 using Lucky.Framework;
-using Lucky.Utilities;
+using Lucky.Framework.Utilities;
 using TMPro;
 using UnityEngine;
 using Coroutine = Lucky.Framework.Coroutine;
@@ -28,9 +28,9 @@ public class EndSceneText : ManagedBehaviour
         Add(new Coroutine(End()));
     }
 
-    protected override void ManagedUpdate()
+    protected override void ManagedFixedUpdate()
     {
-        base.ManagedUpdate();
+        base.ManagedFixedUpdate();
         if (isStartEnd)
         {
             float v = Mathf.Sin(Timer.GetTime());

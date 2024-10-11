@@ -1,6 +1,6 @@
 using System;
-using Lucky.Extensions;
-using Lucky.Utilities;
+using Lucky.Framework.Extensions;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -24,10 +24,10 @@ namespace Slime
                 StateMachine.State = StRun;
                 return;
             }
-            anim.Play("Run");
-            anim.speed = 1.5f;
+            anim.Play("run");
+            anim.Speed = 1.5f;
             breedTimer = 0;
-            intentionAnim.Play("Love");
+            intentionAnim.Play("love");
         }
 
         private void LoveEnd()

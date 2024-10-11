@@ -1,6 +1,6 @@
 using System;
-using Lucky.Extensions;
-using Lucky.Utilities;
+using Lucky.Framework.Extensions;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,16 +13,16 @@ namespace Slime
 
         private void SleepBegin()
         {
-            anim.Play("Sleep");
-            anim.speed = 1f;
-            intentionAnim.Play("Sleep");
+            anim.Play("sleep");
+            anim.Speed = 1f;
+            intentionAnim.Play("sleep");
             sleepTimer = SleepTime;
             rb.velocity = Vector2.zero;
         }
         
         private void SleepEnd()
         {
-            intentionAnim.Play("Empty");
+            intentionAnim.PlayEmpty();
         }
 
         private int SleepUpdate()

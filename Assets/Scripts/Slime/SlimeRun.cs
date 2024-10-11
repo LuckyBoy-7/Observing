@@ -1,6 +1,6 @@
 using System;
-using Lucky.Extensions;
-using Lucky.Utilities;
+using Lucky.Framework.Extensions;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,22 +16,20 @@ namespace Slime
 
         private void RunBegin()
         {
-            anim.Play("Run");
-            // intentionSr.enabled = false;
-            // intentionAnim.Play("Empty");  // empty好像没用, 因为它并不会更改图片
-            anim.speed = 1f;
+            anim.Play("run");
+            intentionAnim.PlayEmpty();
+            anim.Speed = 1f;
             tryFindLoverDelayTimer = 2f;
         }
         
         private void RunEnd()
         {
-            anim.Play("Run");
-            // intentionSr.enabled = true;
+            anim.Play("run");
         }
 
         private int RunUpdate()
         {
-            anim.Play("Run");  // 可能激活的瞬间调用无效
+            anim.Play("run");  // 可能激活的瞬间调用无效
             if (CurrentEnergy < HungryThreshold)
                 return StEat;
 

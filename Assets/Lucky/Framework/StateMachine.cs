@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
-using Lucky.Utilities;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 
 namespace Lucky.Framework
 {
-    public class StateMachine : LuckyCompoennt
+    public class StateMachine : LuckyComponent
     {
         private int state;
         private Action[] begins;
@@ -29,8 +29,9 @@ namespace Lucky.Framework
             currentCoroutine.RemoveOnComplete = false;
         }
         
-        public override void Added()
+        public override void Added(ManagedBehaviour entity)
         {
+            base.Added(entity);
             if (state == -1)
             {
                 State = 0;

@@ -1,8 +1,8 @@
 using System;
-using Lucky.Extensions;
-using Lucky.Utilities;
+using Lucky.Framework.Extensions;
+using Lucky.Framework.Utilities;
 using UnityEngine;
-using static Lucky.Utilities.MathUtils;
+using static Lucky.Framework.Utilities.MathUtils;
 
 namespace Lucky.Framework.Particle
 {

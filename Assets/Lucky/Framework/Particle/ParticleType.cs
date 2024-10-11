@@ -1,5 +1,5 @@
 using System;
-using Lucky.Utilities;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 
 namespace Lucky.Framework.Particle
@@ -174,9 +174,9 @@ namespace Lucky.Framework.Particle
             // 都没有就用Draw的fallback
             else
             {
-                if (Draw.Particle == null)
+                if (ParticleSystem.ParticleSprite == null)
                     Debug.LogWarning("Draw.Particle is None");
-                particle.Source = Draw.Particle;
+                particle.Source = ParticleSystem.ParticleSprite;
             }
 
 

@@ -9,20 +9,21 @@ namespace Lucky.Framework
 
     public class ManagedBehaviour : ManagedBehaviourBase
     {
+
         #region Components
 
-        public List<LuckyCompoennt> Components = new();
-        private List<LuckyCompoennt> ComponentsToAdd = new();
-        private List<LuckyCompoennt> ComponentsToRemove = new();
+        public LuckyComponentList Components;
 
-        public void Add(LuckyCompoennt component)
+        public void Add(LuckyComponent component)
         {
-            ComponentsToAdd.Add(component);
+            Components ??= new(this);
+            Components.Add(component);
         }
 
-        public void Remove(LuckyCompoennt component)
+        public void Remove(LuckyComponent component)
         {
-            ComponentsToRemove.Add(component);
+            Components ??= new(this);
+            Components.Remove(component);
         }
 
         #endregion
@@ -71,70 +72,40 @@ namespace Lucky.Framework
 
         #region Update
 
-        protected virtual void ManagedUpdate()
-        {
-            foreach (var luckyCompoennt in Components)
-            {
-                if (luckyCompoennt.Active)
-                    luckyCompoennt.Update();
-            }
-        }
+        // protected virtual void ManagedUpdate()
+        // {
+        //     Components.Update();
+        // }
 
         protected virtual void ManagedFixedUpdate()
         {
-            // 移除待移除的组件
-            foreach (var luckyCompoennt in ComponentsToRemove)
-            {
-                Components.Remove(luckyCompoennt);
-                luckyCompoennt.Removed();
-            }
-
-            ComponentsToRemove.Clear();
-
-            foreach (var luckyComponent in ComponentsToAdd)
-            {
-                luckyComponent.Entity = this;
-                luckyComponent.Added();
-                Components.Add(luckyComponent);
-            }
-
-            ComponentsToAdd.Clear();
-
-            foreach (var luckyCompoennt in Components)
-            {
-                if (luckyCompoennt.Active)
-                    luckyCompoennt.FixedUpdate();
-            }
+            Components?.FixedUpdate();
         }
 
+        /// <summary>
+        /// 把Update Ban了
+        /// </summary>
         public override sealed void Update()
         {
-            if (CanUpdate)
-            {
-                ManagedUpdate();
-            }
-        }
+            // if (CanUpdate)
+            // {
+            //     ManagedUpdate();
+            // }
+        } 
 
         public override sealed void FixedUpdate()
         {
             if (CanUpdate)
             {
                 ManagedFixedUpdate();
-                Render();  // 卡爆了(
+                Render(); // 卡爆了(
             }
             // DebugRender();
         }
 
-        public virtual void Render()
+        public virtual void Render()  // 虽然不是真正意义上的render, 但还是在这儿做个逻辑上的分离
         {
-            foreach (var luckyComponent in ComponentsToAdd)
-            {
-                luckyComponent.Render();
-            }
-        }
-        
-        public virtual void DebugRender()
-        {
+            Components?.Render();
         }
 
         #endregion

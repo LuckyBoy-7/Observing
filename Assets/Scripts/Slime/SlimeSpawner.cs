@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Lucky.Extensions;
-using Lucky.Managers;
-using Lucky.Managers.ObjectPool_;
-using Lucky.Utilities;
+using Lucky.Framework.Extensions;
+using Lucky.Framework.Managers;
+using Lucky.Framework.Managers.ObjectPool_;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 
 namespace Slime

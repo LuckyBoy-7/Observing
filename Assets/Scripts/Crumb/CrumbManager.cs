@@ -1,11 +1,13 @@
 using System.Collections.Generic;
-using Lucky.Extensions;
+using Lucky.Framework.Collections;
+using Lucky.Framework.Extensions;
 using Lucky.Framework.Particle;
-using Lucky.Managers;
-using Lucky.Utilities;
+using Lucky.Framework.Managers;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 using ParticleSystem = Lucky.Framework.Particle.ParticleSystem;
-using static Lucky.Utilities.CameraUtils;
+using static Lucky.Framework.Utilities.CameraUtils;
+using Input = Lucky.Framework.Inputs.Input;
 
 namespace Crumb
 {
@@ -14,12 +16,12 @@ namespace Crumb
         private const float Width = 100;
         private const float Height = 50;
         private const int Depth = 20;
-        public Quadtree<Crumb> Crumbs = new(0, 0, Width, Height, Depth);
+        public QuadTree<Crumb> Crumbs = new(0, 0, Width, Height, Depth);
         public int number = 10;
 
-        protected override void ManagedUpdate()
+        protected override void ManagedFixedUpdate()
         {
-            base.ManagedUpdate();
+            base.ManagedFixedUpdate();
             if (Input.GetMouseButtonDown(0))
             {
                 Vector2 bottomRight = new Vector2(HalfWidth, -HalfHeight);

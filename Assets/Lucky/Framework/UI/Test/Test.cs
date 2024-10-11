@@ -1,6 +1,6 @@
-using Lucky.Extensions;
+using Lucky.Framework.Extensions;
 using Lucky.Framework.Items;
-using Lucky.Inputs;
+using Lucky.Framework.Inputs;
 
 namespace Lucky.Framework.UI.Test
 {

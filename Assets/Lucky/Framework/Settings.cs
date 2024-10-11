@@ -1,5 +1,5 @@
-using Lucky.Inputs;
-using Lucky.Managers;
+using Lucky.Framework.Inputs;
+using Lucky.Framework.Managers;
 using UnityEngine;
 
 namespace Lucky.Framework

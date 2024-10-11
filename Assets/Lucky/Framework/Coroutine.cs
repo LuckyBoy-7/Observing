@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Lucky.Utilities;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 
 namespace Lucky.Framework
 {
-    public class Coroutine : LuckyCompoennt
+    public class Coroutine : LuckyComponent
     {
         public bool RemoveOnComplete = true;
         public bool IsRealtime;

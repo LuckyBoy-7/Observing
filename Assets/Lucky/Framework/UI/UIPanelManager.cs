@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Lucky.Managers;
+using Lucky.Framework.Managers;
 
 namespace Lucky.Framework.UI
 {

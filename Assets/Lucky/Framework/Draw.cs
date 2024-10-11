@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Lucky.Extensions;
+using Lucky.Framework.Extensions;
 using UnityEngine;
-using static Lucky.Utilities.MathUtils;
+using static Lucky.Framework.Utilities.MathUtils;
 
 namespace Lucky.Framework
 {

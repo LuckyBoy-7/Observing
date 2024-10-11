@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Sprites>
+    <slime path="Slime/">
+        <Anim id="death" path="death"/>
+        <Anim id="dizzy" path="dizzy"/>
+        <Anim id="shock" path="shock"/>
+        <Anim id="sleep" path="sleep"/>
+        <Loop id="run" path="run" delay="0.3"/>
+    </slime>
+
+    <intention path="Intention/">
+        <Loop id="bread" path="bread" delay="0.3"/>
+        <Loop id="dizzy" path="dizzy" delay="0.3"/>
+        <Loop id="hot" path="hot" delay="0.3"/>
+        <Loop id="love" path="love" delay="0.3"/>
+        <Loop id="shy" path="shy" delay="0.3"/>
+        <Loop id="death" path="skeleton" delay="0.3"/>
+        <Loop id="sleep" path="sleep" delay="0.3"/>
+    </intention>
+
+    <butterfly path="" start="idle">
+        <Loop id="idle" path="butterfly" delay="0.5"/>
+    </butterfly>
+</Sprites>

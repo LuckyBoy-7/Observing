@@ -1,6 +1,6 @@
 using System;
-using Lucky.Extensions;
-using Lucky.Utilities;
+using Lucky.Framework.Extensions;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,9 +13,9 @@ namespace Slime
 
         private void DeathBegin()
         {
-            anim.Play("Death");
-            anim.speed = 1f;
-            intentionAnim.Play("Death");
+            anim.Play("death");
+            anim.Speed = 1f;
+            intentionAnim.Play("death");
             deathTimer = DeathTime;
             rb.velocity = Vector2.zero;
             collider.enabled = false;
@@ -23,8 +23,7 @@ namespace Slime
 
         private void DeathEnd()
         {
-            intentionAnim.Play("Empty");
-            intentionSr.sprite = null;
+            intentionAnim.PlayEmpty();
         }
 
         private int DeathUpdate()
@@ -33,8 +32,8 @@ namespace Slime
             rb.velocity = Vector2.zero;
             deathTimer -= Timer.FixedDeltaTime();
             float alpha = MathUtils.Min(deathTimer / DeathTime + 0.2f, 1);
-            sr.color = sr.color.WithA(alpha);
-            intentionSr.color = intentionSr.color.WithA(alpha);
+            Color = Color.WithA(alpha);
+            intentionAnim.Color = intentionAnim.Color.WithA(alpha);
             if (deathTimer < 0)
             {
                 return Kill();

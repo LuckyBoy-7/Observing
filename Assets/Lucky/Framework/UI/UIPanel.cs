@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Lucky.Extensions;
+using Lucky.Framework.Extensions;
 using UnityEngine;
-using Input = Lucky.Inputs.Input;
+using Input = Lucky.Framework.Inputs.Input;
 
 namespace Lucky.Framework.UI
 {
@@ -57,9 +57,9 @@ namespace Lucky.Framework.UI
             };
         }
 
-        protected override void ManagedUpdate()
+        protected override void ManagedFixedUpdate()
         {
-            base.ManagedUpdate();
+            base.ManagedFixedUpdate();
             if (Input.MenuCancel.Pressed && fromUIPanel != null && IsFocused)
             {
                 Coroutine coroutine = new Coroutine(OnExit());

@@ -1,4 +1,4 @@
-using Lucky.Extensions;
+using Lucky.Framework.Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

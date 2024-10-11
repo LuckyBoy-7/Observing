@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using Lucky.Extensions;
+using Lucky.Framework.Extensions;
 using Lucky.Framework;
 using Lucky.Framework.Particle;
-using Lucky.Utilities;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 
 namespace Crumb
 {
-    // todo: 重生到中间的bug
     public class Crumb : Particle
     {
         public List<Sprite> bigSprites = new();

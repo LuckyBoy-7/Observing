@@ -1,6 +1,6 @@
 using System;
-using Lucky.Extensions;
-using Lucky.Utilities;
+using Lucky.Framework.Extensions;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,13 +12,11 @@ namespace Slime
 
         private void PickedupBegin()
         {
-            anim.Play("Shock");
-            anim.speed = 1f;
-            // intentionAnim.Play("Empty");
+            anim.Play("shock");
+            anim.Speed = 1f;
+            intentionAnim.PlayEmpty();
             rb.velocity = Vector2.zero;
             collider.enabled = false;
-            intentionAnim.Play("Empty");
-            intentionSr.sprite = null;
         }
 
         private void PickedupEnd()

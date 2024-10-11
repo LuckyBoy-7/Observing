@@ -1,7 +1,7 @@
 using System.Threading;
-using Lucky.Managers;
+using Lucky.Framework.Managers;
 using UnityEngine;
-using Timer = Lucky.Utilities.Timer;
+using Timer = Lucky.Framework.Utilities.Timer;
 
 namespace Lucky.Framework
 {

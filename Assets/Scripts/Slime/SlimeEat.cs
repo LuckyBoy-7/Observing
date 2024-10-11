@@ -1,7 +1,7 @@
 using System;
 using Crumb;
-using Lucky.Extensions;
-using Lucky.Utilities;
+using Lucky.Framework.Extensions;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -19,15 +19,14 @@ namespace Slime
 
         private void EatBegin()
         {
-            anim.Play("Run");
-            anim.speed = 2f;
-            intentionAnim.Play("Bread");
+            anim.Play("run");
+            anim.Speed = 2f;
+            intentionAnim.Play("bread");
         }
 
         private void EatEnd()
         {
-            anim.speed = 2f;
-            intentionAnim.Play("Empty");
+            intentionAnim.PlayEmpty();
         }
 
         private int EatUpdate()

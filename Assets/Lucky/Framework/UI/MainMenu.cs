@@ -1,7 +1,7 @@
 using System.Collections;
-using Lucky.Extensions;
+using Lucky.Framework.Extensions;
 using Lucky.Framework.Items;
-using Lucky.Inputs;
+using Lucky.Framework.Inputs;
 using UnityEngine;
 
 namespace Lucky.Framework.UI

@@ -1,8 +1,8 @@
 using System;
-using Lucky.Extensions;
-using Lucky.Utilities;
+using Lucky.Framework.Extensions;
+using Lucky.Framework.Utilities;
 using UnityEngine;
-using Input = Lucky.Inputs.Input;
+using Input = Lucky.Framework.Inputs.Input;
 
 namespace Lucky.Framework.Particle
 {
@@ -14,14 +14,14 @@ namespace Lucky.Framework.Particle
         [Range(0, 60)] public float rangeX = 20;
         [Range(0, 60)] public float rangeY = 20;
 
-        private void Awake()
+        protected void Awake()
         {
             particle = new ParticleType(ParticleTypes.Crumb);
         }
 
-        protected override void ManagedUpdate()
+        protected override void ManagedFixedUpdate()
         {
-            base.ManagedUpdate();
+            base.ManagedFixedUpdate();
             if (Input.GetKeyDown(KeyCode.Return))
             {
                 ParticleSystem.Instance.Emit<Particle>(particle, this, amount, Vector2.zero, new Vector2(rangeX, rangeY));

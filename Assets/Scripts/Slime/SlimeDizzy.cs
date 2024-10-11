@@ -1,6 +1,6 @@
 using System;
-using Lucky.Extensions;
-using Lucky.Utilities;
+using Lucky.Framework.Extensions;
+using Lucky.Framework.Utilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,16 +13,16 @@ namespace Slime
 
         private void DizzyBegin()
         {
-            anim.Play("Dizzy");
-            anim.speed = 1f;
-            intentionAnim.Play("Dizzy");
+            anim.Play("dizzy");
+            anim.Speed = 1f;
+            intentionAnim.Play("dizzy");
             dizzyTimer = DizzyTime;
             rb.velocity = Vector2.zero;
         }
         
         private void DizzyEnd()
         {
-            intentionAnim.Play("Empty");
+            intentionAnim.PlayEmpty();
         }
 
         private int DizzyUpdate()

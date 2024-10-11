@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Lucky.Extensions;
+using Lucky.Framework.Extensions;
 using Lucky.Framework.UI;
-using Lucky.Inputs;
+using Lucky.Framework.Inputs;
 using TMPro;
 using UnityEngine;
-using Input = Lucky.Inputs.Input;
+using Input = Lucky.Framework.Inputs.Input;
 
 namespace Lucky.Framework.Items
 {

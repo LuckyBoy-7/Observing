@@ -2,17 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Lucky.Extensions;
+using Lucky.Framework.Extensions;
 using Lucky.Framework;
-using Lucky.Inputs;
-using Lucky.Utilities;
+using Lucky.Framework.Inputs;
+using Lucky.Framework.Utilities;
 using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using Input = Lucky.Inputs.Input;
-using Timer = Lucky.Utilities.Timer;
+using Input = Lucky.Framework.Inputs.Input;
+using Timer = Lucky.Framework.Utilities.Timer;
 
 namespace Lucky.Framework.Items
 {
@@ -312,8 +312,9 @@ namespace Lucky.Framework.Items
             Close();
         }
 
-        protected override void ManagedUpdate()
+        protected override void ManagedFixedUpdate()
         {
+            base.ManagedFixedUpdate();
             OnUpdate?.Invoke();
 
             overlayImage.enabled = ShowOverlay;
@@ -401,6 +402,9 @@ namespace Lucky.Framework.Items
 
                 RectTransform.anchoredPosition = Vector3.zero;
             }
+
+            UpdatePositions();
+            Current?.OnStay();
         }
 
         public float ScrollTargetY
@@ -413,11 +417,6 @@ namespace Lucky.Framework.Items
             }
         }
 
-        protected override void ManagedFixedUpdate()
-        {
-            UpdatePositions();
-            Current?.OnStay();
-        }
 
         private void UpdatePositions()
         {
