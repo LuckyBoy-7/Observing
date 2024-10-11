@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Crumb;
 using Lucky.Framework.Extensions;
 using Lucky.Framework.Utilities;
@@ -30,28 +31,19 @@ namespace Slime
         }
 
         private int EatUpdate()
-        {   
+        {
             if (CurrentEnergy > FullThreshold)
                 return RandomUtils.Choose(StRun, StSleep);
             // 还没初始化或者到达目的地了, 就roll一个targetPos
-            if (targetPos == Vector2.one * MathUtils.MaxValue || this.Dist(targetPos) < 0.1f)
+            if (targetPos == MathUtils.GreatVector2 || this.Dist(targetPos) < 0.1f)
             {
-                targetPos = transform.position + (Vector3)RandomUtils.InsideUnitCircle * targetPosChooseRadius;
+                targetPos = RandomUtils.RandomPosAroundPoint(transform.position, targetPosChooseRadius);
             }
 
             // 找相对近的面包吃
-            Crumb.Crumb crumb = null;
-            foreach (var c in CrumbManager.Instance.Crumbs.GetDeepestValueList(transform.position))
-            {
-                if (crumb == null || this.Dist(c) < this.Dist(crumb))
-                {
-                    crumb = c;
-                }
-            }
-
+            Crumb.Crumb crumb = CrumbManager.Instance.Crumbs.GetDeepestValueList(transform.position).ClosestValue(this.Dist, null);
             if (crumb)
                 targetPos = crumb.transform.position;
-
 
             // 移动
             if (this.Dist(targetPos) < 0.3f)
@@ -67,8 +59,9 @@ namespace Slime
             var crumb = other.GetComponent<Crumb.Crumb>();
             if (crumb)
             {
-                float get = crumb.TakeEnergy(EatSpeed * Timer.FixedDeltaTime());
-                CurrentEnergy = MathUtils.Min(CurrentEnergy + get, MaxEnergy);
+                float canEatAmount = MathUtils.Min(MaxEnergy - CurrentEnergy, EatSpeed * Timer.FixedDeltaTime());
+                float eatAmount = crumb.TakeEnergy(canEatAmount);
+                CurrentEnergy = MathUtils.Min(CurrentEnergy + eatAmount, MaxEnergy);
             }
         }
     }

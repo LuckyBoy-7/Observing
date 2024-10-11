@@ -42,46 +42,47 @@ namespace Slime
 
             anim = Animator.CreateById("slime");
             Add(anim);
-
             intentionAnim = Animator.CreateById("intention");
             Add(intentionAnim);
             intentionAnim.transform.localPosition = Vector3.up * 1.5f;
 
             StateMachine = new StateMachine();
-            StateMachine.SetCallbacks(StRun, RunUpdate, null, RunBegin, RunEnd);
-            StateMachine.SetCallbacks(StLove, LoveUpdate, null, LoveBegin, LoveEnd);
-            StateMachine.SetCallbacks(StEat, EatUpdate, null, EatBegin, EatEnd);
-            StateMachine.SetCallbacks(StSleep, SleepUpdate, null, SleepBegin, SleepEnd);
-            StateMachine.SetCallbacks(StDeath, DeathUpdate, null, DeathBegin, DeathEnd);
-            StateMachine.SetCallbacks(StPickedup, PickedupUpdate, null, PickedupBegin, PickedupEnd);
-            StateMachine.SetCallbacks(StDizzy, DizzyUpdate, null, DizzyBegin, DizzyEnd);
+            StateMachine.SetCallbacks(StRun, "Run", RunBegin, RunEnd, RunUpdate);
+            StateMachine.SetCallbacks(StLove, "Love", LoveBegin, LoveEnd, LoveUpdate);
+            StateMachine.SetCallbacks(StEat, "Eat", EatBegin, EatEnd, EatUpdate);
+            StateMachine.SetCallbacks(StSleep, "Sleep", SleepBegin, SleepEnd, SleepUpdate);
+            StateMachine.SetCallbacks(StDeath, "Death", DeathBegin, DeathEnd, DeathUpdate);
+            StateMachine.SetCallbacks(StPickedup, "Pickedup", PickedupBegin, PickedupEnd, PickedupUpdate);
+            StateMachine.SetCallbacks(StDizzy, "Dizzy", DizzyBegin, DizzyEnd, DizzyUpdate);
             Add(StateMachine);
-
-            CurrentEnergy = MaxEnergy;
         }
 
         protected override void ManagedFixedUpdate()
         {
+            // 走太远直接kill
             if (transform.position.magnitude > KillRadius)
             {
                 StateMachine.State = StDeath;
                 return;
             }
 
-            if (StateMachine.State != StPickedup && StateMachine.State != StSleep)
+            // 掉体力
+            if (!StateMachine.AnyEqual(StPickedup, StSleep, StDizzy))
+            {
                 CurrentEnergy -= EnergyDropSeed * Timer.FixedDeltaTime();
-            if (CurrentEnergy < 0)
-                StateMachine.State = StDeath;
+                if (CurrentEnergy < 0)
+                    StateMachine.State = StDeath;
+            }
+
             base.ManagedFixedUpdate();
 
             DebugState = StateMachine.State;
         }
 
-        public int Kill()
+        public void Kill()
         {
-            SlimeSpawner.Instance.TryRemoveWantLove(this);
+            SlimeSpawner.Instance.WantLoveSlimes.Remove(this);
             ObjectPoolManager.Instance.Release(this);
-            return StRun;
         }
 
         public override void Render()
@@ -104,7 +105,7 @@ namespace Slime
 
                 // to love
                 Gizmos.color = Color.magenta;
-                Gizmos.DrawWireSphere(transform.position, LoveViewRadius);
+                // Gizmos.DrawWireSphere(transform.position, LoveViewRadius);
             }
             else if (StateMachine.State == StEat)
             {
@@ -118,13 +119,13 @@ namespace Slime
         {
             gameObject.SetActive(true);
             SlimeSpawner.Instance.Slimes.Add(this);
-
+            
             collider.enabled = true;
             CurrentEnergy = MaxEnergy;
-            StateMachine.State = StRun;
             Color = Color.WithA(1);
             intentionAnim.Color = intentionAnim.Color.WithA(1);
-            intentionAnim.PlayEmpty();
+            
+            StateMachine.State = StRun;
         }
 
         public void OnRelease()

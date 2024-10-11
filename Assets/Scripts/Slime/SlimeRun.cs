@@ -8,7 +8,7 @@ namespace Slime
 {
     public partial class Slime
     {
-        private Vector2 targetPos = Vector2.one * MathUtils.MaxValue;
+        private Vector2 targetPos = MathUtils.GreatVector2;
         private float targetPosChooseRadius = 10; // 在该半径内定位targetPos
 
         public float RunSpeed = 2;
@@ -17,26 +17,26 @@ namespace Slime
         private void RunBegin()
         {
             anim.Play("run");
-            intentionAnim.PlayEmpty();
             anim.Speed = 1f;
             tryFindLoverDelayTimer = 2f;
         }
-        
+
         private void RunEnd()
         {
-            anim.Play("run");
+            anim.PlayEmpty();
         }
 
         private int RunUpdate()
         {
-            anim.Play("run");  // 可能激活的瞬间调用无效
+            // 饿了
             if (CurrentEnergy < HungryThreshold)
                 return StEat;
 
 
+            // tolove
             if (!WantLove)
             {
-                SlimeSpawner.Instance.TryRemoveWantLove(this);
+                SlimeSpawner.Instance.WantLoveSlimes.Remove(this);
                 tryFindLoverDelayTimer = 2f;
             }
             else
@@ -44,13 +44,15 @@ namespace Slime
                 tryFindLoverDelayTimer -= Timer.FixedDeltaTime();
                 if (tryFindLoverDelayTimer < 0)
                 {
-                    SlimeSpawner.Instance.TryAddWantLove(this);
+                    SlimeSpawner.Instance.WantLoveSlimes.Add(this);
+                    // 暂时没啥好算法, 所以就随便找个距离内的就行
                     Slime other = SlimeSpawner.Instance.GetSlimeWantLoveInDist(this, 1000);
-                    // Slime other = SlimeSpawner.Instance.GetSlimeWantLoveInDist(this, LoveViewRadius);
                     if (other)
                     {
                         lover = other;
                         other.lover = this;
+                        SlimeSpawner.Instance.WantLoveSlimes.Remove(this);
+                        SlimeSpawner.Instance.WantLoveSlimes.Remove(other);
                         other.StateMachine.State = StLove;
                         return StLove;
                     }
@@ -58,9 +60,9 @@ namespace Slime
             }
 
             // 还没初始化或者到达目的地了, 就roll一个targetPos
-            if (targetPos == Vector2.one * MathUtils.MaxValue || this.Dist(targetPos) < 0.1f)
+            if (targetPos == MathUtils.GreatVector2 || this.Dist(targetPos) < 0.1f)
             {
-                targetPos = transform.position + (Vector3)RandomUtils.InsideUnitCircle * targetPosChooseRadius;
+                targetPos = RandomUtils.RandomPosAroundPoint(transform.position, targetPosChooseRadius);
             }
 
             rb.velocity = this.Dir(targetPos) * RunSpeed;

@@ -13,12 +13,13 @@ namespace Slime
 
         private void DeathBegin()
         {
-            anim.Play("death");
-            anim.Speed = 1f;
-            intentionAnim.Play("death");
             deathTimer = DeathTime;
             rb.velocity = Vector2.zero;
             collider.enabled = false;
+            
+            anim.Play("death");
+            anim.Speed = 1f;
+            intentionAnim.Play("death");
         }
 
         private void DeathEnd()
@@ -36,7 +37,7 @@ namespace Slime
             intentionAnim.Color = intentionAnim.Color.WithA(alpha);
             if (deathTimer < 0)
             {
-                return Kill();
+                Kill();
             }
 
             return StDeath;

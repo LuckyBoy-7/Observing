@@ -13,6 +13,9 @@ namespace Lucky.Framework.Utilities
         public const float NaN = 0.0f / 0.0f;
         public const float NegativeInfinity = -1.0f / 0.0f;
         public const float PositiveInfinity = 1.0f / 0.0f;
+        
+        public static Vector2 GreatVector2 => Vector2.one * MaxValue;
+
 
         public static float PI(float k = 1) => (float)Math.PI * k;
 

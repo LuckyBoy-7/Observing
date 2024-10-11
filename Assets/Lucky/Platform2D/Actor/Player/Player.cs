@@ -43,9 +43,9 @@ namespace Lucky.Platform2D.Actor.Player
             rb = GetComponent<Rigidbody2D>();
 
             StateMachine = new StateMachine();
-            StateMachine.SetCallbacks(StNormal, NormalUpdate);
-            StateMachine.SetCallbacks(StClimb, ClimbUpdate, null, ClimbBegin);
-            StateMachine.SetCallbacks(StDash, DashUpdate, DashCoroutine, DashBegin);
+            StateMachine.SetCallbacks(StNormal, "Normal", null, null, NormalUpdate);
+            StateMachine.SetCallbacks(StClimb, "Climb", ClimbBegin, null, ClimbUpdate);
+            StateMachine.SetCallbacks(StDash, "Dash", DashBegin, null, DashUpdate, DashCoroutine);
             Add(StateMachine);
         }
 

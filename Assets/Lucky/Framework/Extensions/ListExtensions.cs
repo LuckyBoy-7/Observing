@@ -1,5 +1,6 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Lucky.Framework.Extensions
 {
@@ -34,6 +35,20 @@ namespace Lucky.Framework.Extensions
             T retval = lst[idx];
             lst.RemoveAt(idx);
             return retval;
+        }
+
+        public static T ClosestValue<T>(this List<T> lst, Func<T, float> getter, T defaultValue)
+        {
+            if (lst.Count == 0)
+                return defaultValue;
+            T res = lst[0];
+            for (int i = 1; i < lst.Count; i++)
+            {
+                if (getter(res) < getter(lst[i]))
+                    res = lst[i];
+            }
+
+            return res;
         }
     }
 }

@@ -15,7 +15,7 @@ public class Magnifier : Interactable
     private void Awake()
     {
         // todo: 到时候开了
-        Cursor.visible = false;
+        // Cursor.visible = false;
     }
 
     protected override void ManagedFixedUpdate()
@@ -73,7 +73,6 @@ public class Magnifier : Interactable
             if (RandomUtils.NextFloat() < 0.04f)
             {
                 slime.intentionAnim.Play("Shy");
-                print(123);
             }
             else
                 slime.intentionAnim.PlayEmpty();

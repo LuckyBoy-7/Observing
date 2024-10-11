@@ -12,11 +12,12 @@ namespace Slime
 
         private void PickedupBegin()
         {
+            rb.velocity = Vector2.zero;
+            collider.enabled = false;
+            
             anim.Play("shock");
             anim.Speed = 1f;
             intentionAnim.PlayEmpty();
-            rb.velocity = Vector2.zero;
-            collider.enabled = false;
         }
 
         private void PickedupEnd()

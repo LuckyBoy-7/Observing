@@ -13,11 +13,12 @@ namespace Slime
 
         private void SleepBegin()
         {
+            sleepTimer = SleepTime;
+            rb.velocity = Vector2.zero;
+            
             anim.Play("sleep");
             anim.Speed = 1f;
             intentionAnim.Play("sleep");
-            sleepTimer = SleepTime;
-            rb.velocity = Vector2.zero;
         }
         
         private void SleepEnd()

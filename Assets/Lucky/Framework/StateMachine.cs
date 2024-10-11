@@ -5,12 +5,15 @@ using UnityEngine;
 
 namespace Lucky.Framework
 {
+    [Serializable]
     public class StateMachine : LuckyComponent
     {
-        private int state;
+        [SerializeField] private int state;
+        [SerializeField] private string stateName;
+        private string[] names;
         private Action[] begins;
-        private Func<int>[] updates;
         private Action[] ends;
+        private Func<int>[] updates;
         private Func<IEnumerator>[] coroutines;
         private Coroutine currentCoroutine;
 
@@ -21,14 +24,15 @@ namespace Lucky.Framework
         public StateMachine(int maxStates = 10)
         {
             PreviousState = (state = -1);
+            names = new string[maxStates];
             begins = new Action[maxStates];
-            updates = new Func<int>[maxStates];
             ends = new Action[maxStates];
+            updates = new Func<int>[maxStates];
             coroutines = new Func<IEnumerator>[maxStates];
             currentCoroutine = new Coroutine();
             currentCoroutine.RemoveOnComplete = false;
         }
-        
+
         public override void Added(ManagedBehaviour entity)
         {
             base.Added(entity);
@@ -45,6 +49,7 @@ namespace Lucky.Framework
             {
                 if (state != value)
                 {
+                    stateName = names[state];
                     if (Log)
                     {
                         Debug.Log(string.Concat("Enter State ", value, " (leaving ", state, ")"));
@@ -90,11 +95,12 @@ namespace Lucky.Framework
         }
 
 
-        public void SetCallbacks(int state, Func<int> onUpdate, Func<IEnumerator> coroutine = null, Action begin = null, Action end = null)
+        public void SetCallbacks(int state, string name, Action begin = null, Action end = null, Func<int> onUpdate = null, Func<IEnumerator> coroutine = null)
         {
-            updates[state] = onUpdate;
+            names[state] = name;
             begins[state] = begin;
             ends[state] = end;
+            updates[state] = onUpdate;
             coroutines[state] = coroutine;
         }
 
@@ -120,6 +126,17 @@ namespace Lucky.Framework
         public static implicit operator int(StateMachine s)
         {
             return s.state;
+        }
+
+        public bool AnyEqual(params int[] states)
+        {
+            foreach (int state in states)
+            {
+                if (state == State)
+                    return true;
+            }
+
+            return false;
         }
     }
 }

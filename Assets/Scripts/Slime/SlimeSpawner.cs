@@ -26,7 +26,7 @@ namespace Slime
         };
 
         public HashSet<Slime> Slimes = new();
-        private HashSet<Slime> wantLoveSlimes = new();
+        public HashSet<Slime> WantLoveSlimes = new();
         public Magnifier Magnifier;
 
         private void Awake()
@@ -63,7 +63,7 @@ namespace Slime
 
         public Slime GetSlimeWantLoveInDist(Slime from, float dist)
         {
-            foreach (var slime in wantLoveSlimes)
+            foreach (var slime in WantLoveSlimes)
             {
                 if (slime == from)
                     continue;
@@ -75,16 +75,6 @@ namespace Slime
             }
 
             return null;
-        }
-
-        public void TryAddWantLove(Slime slime)
-        {
-            wantLoveSlimes.Add(slime);
-        }
-
-        public void TryRemoveWantLove(Slime slime)
-        {
-            wantLoveSlimes.Remove(slime);
         }
     }
 }

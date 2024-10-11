@@ -13,11 +13,12 @@ namespace Slime
 
         private void DizzyBegin()
         {
+            dizzyTimer = DizzyTime;
+            rb.velocity = Vector2.zero;
+            
             anim.Play("dizzy");
             anim.Speed = 1f;
             intentionAnim.Play("dizzy");
-            dizzyTimer = DizzyTime;
-            rb.velocity = Vector2.zero;
         }
         
         private void DizzyEnd()

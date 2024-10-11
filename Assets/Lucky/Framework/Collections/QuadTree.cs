@@ -42,7 +42,7 @@ namespace Lucky.Framework.Collections
         }
 
         /// <summary>
-        /// 拿到最大深度的有值得4叉树
+        /// 拿到最大深度的有值得4叉树节点
         /// </summary>
         /// <returns></returns>
         public List<T> GetDeepestValueList(Vector2 position)
