@@ -17,6 +17,7 @@ namespace DefaultNamespace
         {
             anim = Animator.CreateById("butterfly");
             Add(anim);
+            anim.MaskInteraction = SpriteMaskInteraction.VisibleInsideMask;
             curve = new()
             {
                 Begin = RandomUtils.RandomPointInRect(CameraUtils.Bounds),

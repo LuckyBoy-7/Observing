@@ -15,7 +15,7 @@ public class Magnifier : Interactable
     private void Awake()
     {
         // todo: 到时候开了
-        // Cursor.visible = false;
+        Cursor.visible = false;
     }
 
     protected override void ManagedFixedUpdate()
@@ -29,12 +29,6 @@ public class Magnifier : Interactable
         angle += MathUtils.SignedAngle(Vector2.right, vec) * 0.8f;
         transform.eulerAngles = new Vector3(0, 0, angle);
     }
-
-    // protected override void OnCursorPress()
-    // {
-    //     base.OnCursorPress();
-    //    
-    // }
 
     protected override void OnCursorDrag(Vector2 delta)
     {

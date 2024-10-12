@@ -48,11 +48,7 @@ namespace Lucky.Framework
         protected void FixedUpdate()
         {
             Input.FixedUpdate();
-            // 清空绘图
-        }
 
-        private void LateUpdate()
-        {
 #if UNITY_EDITOR
             if (Input.GetKey(KeyCode.LeftControl))
             {

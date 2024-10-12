@@ -34,7 +34,7 @@ namespace Slime
         {
             if (CurrentEnergy > FullThreshold)
                 return RandomUtils.Choose(StRun, StSleep);
-            // 还没初始化或者到达目的地了, 就roll一个targetPos
+            // 有东西吃就吃, 没东西吃就逛
             if (targetPos == MathUtils.GreatVector2 || this.Dist(targetPos) < 0.1f)
             {
                 targetPos = RandomUtils.RandomPosAroundPoint(transform.position, targetPosChooseRadius);

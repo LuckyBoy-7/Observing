@@ -43,121 +43,55 @@ namespace DefaultNamespace
         public EndSceneText EndSceneText;
 
 
-        private float Temperature
+        private List<float> timeLine = new List<float>()
         {
-            get
+            Period1,
+            Period2,
+            Period3,
+            Period4,
+            Period5,
+            Period6,
+        };
+
+        private SerialSegments<float> temperature = new SerialSegments<float>
+        (
+            new List<float>() { -82, 0, 100, 0, 45, -50 },
+            MathUtils.Lerp
+        );
+
+        private float Temperature => temperature.GetByExistTimes(timeLine, curTime);
+
+        private SerialSegments<Color> hue = new SerialSegments<Color>
+        (
+            new List<Color>()
             {
-                List<float> periods = new List<float>
-                {
-                    Period1, Period2, Period3, Period4, Period5, Period6
-                };
-                List<float> values = new()
-                {
-                    -82, // 1
-                    0, // 2
-                    100, // 3
-                    0, // 4
-                    45, // 5
-                    -50 // 6
-                };
-                for (var i = 0; i < periods.Count - 1; i++)
-                {
-                    if (curTime < periods[i + 1] && curTime > periods[i])
-                    {
-                        return MathUtils.Lerp(values[i], values[i + 1], (curTime - periods[i]) / (periods[i + 1] - curTime));
-                    }
-                }
+                new Color(255, 144, 121) / 255,
+                new Color(31, 60, 180) / 255,
+                new Color(255, 43, 0) / 255,
+                new Color(31, 60, 180) / 255,
+                new Color(1, 0.4f, 0),
+                Color.black
+            },
+            (c1, c2, k) => Color.Lerp(c1, c2, k).WithA(1)
+        );
 
-                return -1;
-            }
-        }
+        private Color Hue => hue.GetByExistTimes(timeLine, curTime);
 
-        private Color Hue
-        {
-            get
-            {
-                List<float> periods = new List<float>
-                {
-                    Period1, Period2, Period3, Period4, Period5, Period6
-                };
-                List<Color> colors = new()
-                {
-                    new Color(255, 144, 121) / 255, // 1
-                    new Color(31, 60, 180) / 255, // 2
-                    new Color(255, 43, 0) / 255, // 3
-                    new Color(31, 60, 180) / 255, // 4
-                    new Color(1, 0.4f, 0), // 5
-                    Color.black // 6
-                };
-                for (var i = 0; i < periods.Count - 1; i++)
-                {
-                    if (curTime < periods[i + 1] && curTime > periods[i])
-                    {
-                        return Color.Lerp(colors[i], colors[i + 1], (curTime - periods[i]) / (periods[i + 1] - curTime)).WithA(1);
-                    }
-                }
+        private SerialSegments<float> brightness = new SerialSegments<float>
+        (
+            new List<float>() { 1, 1.5f, 1.14f, 1.5f, 0.25f, -4.2f },
+            MathUtils.Lerp
+        );
 
-                return Color.black;
-            }
-        }
+        private float Brightness => brightness.GetByExistTimes(timeLine, curTime);
 
-        private float Brightness
-        {
-            get
-            {
-                List<float> periods = new List<float>
-                {
-                    Period1, Period2, Period3, Period4, Period5, Period6
-                };
-                List<float> values = new()
-                {
-                    1, // 1
-                    1.5f, // 2
-                    1.14f, // 3
-                    1.5f, // 4
-                    0.25f, // 5
-                    -4.2f //6                    
-                };
-                for (var i = 0; i < periods.Count - 1; i++)
-                {
-                    if (curTime < periods[i + 1] && curTime > periods[i])
-                    {
-                        return MathUtils.Lerp(values[i], values[i + 1], (curTime - periods[i]) / (periods[i + 1] - curTime));
-                    }
-                }
+        private SerialSegments<float> saturation = new SerialSegments<float>
+        (
+            new List<float>() { 50, 0, 25, 0, 100, -8 },
+            MathUtils.Lerp
+        );
 
-                return -1;
-            }
-        }
-
-        private float Saturation
-        {
-            get
-            {
-                List<float> periods = new List<float>
-                {
-                    Period1, Period2, Period3, Period4, Period5, Period6
-                };
-                List<float> values = new()
-                {
-                    50, // 1
-                    0, // 2
-                    25, // 3
-                    0, // 4
-                    100, // 5
-                    -8 // 6
-                };
-                for (var i = 0; i < periods.Count - 1; i++)
-                {
-                    if (curTime < periods[i + 1] && curTime > periods[i])
-                    {
-                        return MathUtils.Lerp(values[i], values[i + 1], (curTime - periods[i]) / (periods[i + 1] - curTime));
-                    }
-                }
-
-                return -1;
-            }
-        }
+        private float Saturation => saturation.GetByExistTimes(timeLine, curTime);
 
 
         protected override void ManagedFixedUpdate()
@@ -180,8 +114,8 @@ namespace DefaultNamespace
             if (isStartEnd)
                 return;
             // 一开始淡入
-            // float alpha = 1 - MathUtils.Min(1, curTime / StartTime);
-            // panel.color = panel.color.WithA(alpha);
+            float alpha = 1 - MathUtils.Min(1, curTime / StartTime);
+            panel.color = panel.color.WithA(alpha);
 
             // 模拟微微眨眼的效果
             Vignette vignette = volume.profile.GetSetting<Vignette>();
@@ -193,6 +127,7 @@ namespace DefaultNamespace
             grading.postExposure.value = Brightness;
             grading.saturation.value = Saturation;
             grading.temperature.value = Temperature;
+            grading.colorFilter.value = Hue; // 居然忘加了, 难受
         }
 
         IEnumerator EndGameCoroutine()

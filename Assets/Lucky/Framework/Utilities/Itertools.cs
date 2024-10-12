@@ -127,5 +127,27 @@ namespace Lucky.Framework.Utilities
 
             return a;
         }
+
+        public static int BisectLeft<T>(List<T> lst, float val, Func<T, float> selectFunc)
+        {
+            int left = -1; // idx <= left的值都 < val, [-1, n - 1]
+            int right = lst.Count; // idx >= right的值都 >= val, [0, n]
+            while (left < right - 1)
+            {
+                int mid = (left + right) / 2;
+                if (selectFunc(lst[mid]) >= val)
+                    right = mid;
+                else
+                    left = mid;
+            }
+
+            return right;
+        }
+
+        public static int BisectLeft(List<float> lst, float val) => BisectLeft(lst, val, f => f);
+        
+        public static int BisectRight<T>(List<T> lst, float val, Func<T, float> selectFunc)=> BisectLeft(lst, val + MathUtils.Epsilon, selectFunc);
+ 
+        public static int BisectRight(List<float> lst, float val) => BisectRight(lst, val, f => f);
     }
 }

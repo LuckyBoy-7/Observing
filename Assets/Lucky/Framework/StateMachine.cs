@@ -49,7 +49,7 @@ namespace Lucky.Framework
             {
                 if (state != value)
                 {
-                    stateName = names[state];
+                    stateName = names[value];
                     if (Log)
                     {
                         Debug.Log(string.Concat("Enter State ", value, " (leaving ", state, ")"));

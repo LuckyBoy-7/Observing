@@ -56,6 +56,9 @@ namespace Lucky.Framework.Interactive
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        #region Delegates
+
         // 这些是可以给外部用的给
         public event Action OnCursorEnterEvent; // 鼠标进入时
         public event Action OnCursorExitEvent; // 鼠标离开时
@@ -69,11 +72,16 @@ namespace Lucky.Framework.Interactive
         public event Action OnCursorLongPressEvent; // 且在area范围内
         public event Action OnCursorWipeEvent; // drag并抖动
         public event Action OnCursorReleaseInBoundsEvent; // 释放是在box内
+
+        #endregion
+
         public float WipeDistanceAccumulator { get; set; } // 因为wipe这个状态其实不是很好定义，如果wipe的多个对象都不知道要作用于哪一个，所以还是写在基类里，wipeDistance量到了就调用
         private bool debug = false;
         public bool canInteract = true;
         public bool canBlockRaycast = true;
-        
+
+        #region Methods Called By GameCursor
+
         public void CursorEnter()
         {
             if (debug)
@@ -173,6 +181,10 @@ namespace Lucky.Framework.Interactive
             OnCursorReleaseInBounds();
         }
 
+        #endregion
+
+        #region Methods Overridden By Children
+
         // 这些是可以给子类用的用的给
         protected virtual void OnCursorEnter()
         {
@@ -202,6 +214,11 @@ namespace Lucky.Framework.Interactive
         {
         }
 
+        /// <summary>
+        /// OnCursor分为两种, 一种是从鼠标按下开始算, 一种是要拖动才开始算
+        /// 由于第二种可以由第一种稍微判断一下来实现, 且碰到的需求相对少, 且我也不太知道取什么名所以就只写第一种的实现
+        /// </summary>
+        /// <param name="delta"></param>
         protected virtual void OnCursorDrag(Vector2 delta)
         {
         }
@@ -221,5 +238,8 @@ namespace Lucky.Framework.Interactive
         protected virtual void OnCursorReleaseInBounds()
         {
         }
+
+        #endregion
+
     }
 }

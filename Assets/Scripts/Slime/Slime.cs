@@ -42,8 +42,11 @@ namespace Slime
 
             anim = Animator.CreateById("slime");
             Add(anim);
+            anim.MaskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+            
             intentionAnim = Animator.CreateById("intention");
             Add(intentionAnim);
+            intentionAnim.MaskInteraction = SpriteMaskInteraction.VisibleInsideMask;
             intentionAnim.transform.localPosition = Vector3.up * 1.5f;
 
             StateMachine = new StateMachine();

@@ -63,6 +63,12 @@ namespace Lucky.Framework.Animation
             get => sr.flipY;
             set => sr.flipY = value;
         }
+        
+        public SpriteMaskInteraction MaskInteraction
+        {
+            get => sr.maskInteraction;
+            set => sr.maskInteraction = value;
+        }
         #endregion
 
         private class Animation

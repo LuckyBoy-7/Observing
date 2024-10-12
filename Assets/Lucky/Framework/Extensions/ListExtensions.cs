@@ -44,7 +44,7 @@ namespace Lucky.Framework.Extensions
             T res = lst[0];
             for (int i = 1; i < lst.Count; i++)
             {
-                if (getter(res) < getter(lst[i]))
+                if (getter(lst[i]) < getter(res))
                     res = lst[i];
             }
 
